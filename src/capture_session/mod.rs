@@ -56,7 +56,10 @@ impl AvCaptureSession {
 	/// Indicates the start of a set of configuration changes to be made atomically.
 	pub fn beginConfiguration(&mut self) {
 
-		unimplemented!()
+		unsafe {
+			
+			let _: () = msg_send![self.obj, beginConfiguration];
+		}
 	}
 
 	/// Commits a set of configuration changes.
