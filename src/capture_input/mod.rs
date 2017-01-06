@@ -6,7 +6,7 @@ use objc_foundation::NSObject;
 /// `AVCaptureInput` is an abstract base-class describing an input data source to 
 /// an `AVCaptureSession` object.
 pub struct AvCaptureInput {
-	obj: *mut NSObject,
+	pub(super) obj: *mut NSObject,
 	/// The capture input’s ports.
 	ports: Vec<Box<AvCaptureInputPort>>,
 }
