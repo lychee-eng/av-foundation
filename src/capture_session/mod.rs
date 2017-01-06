@@ -74,7 +74,10 @@ impl AvCaptureSession {
 	/// Commits a set of configuration changes.
 	pub fn commitConfiguration(&mut self) {
 
-		unimplemented!()
+		unsafe {
+
+			msg_send![self.obj, commitConfiguration]
+		}
 	}
 
 }

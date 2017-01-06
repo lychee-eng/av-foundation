@@ -48,12 +48,16 @@ fn main() {
 			//data_output.video_settings = ..
 			//dataOutput.always_discards_late_video_frames = true
 
-			if session.canAddOutput(&data_output) {
+			// ========================
 
-				session.addOutput(data_output);
-			}
+			// if session.canAddOutput(&data_output) {
 
-			session.commitConfiguration();
+			// 	session.addOutput(data_output);
+			// }
+
+			// session.commitConfiguration();
+
+			// ========================
 
 			let queue = unsafe {
 
@@ -69,6 +73,20 @@ fn main() {
 
 				dispatch_queue_create(ptr, ptr::null())
 			};
+
+
+			data_output.set__sampleBufferDelegate__queue(&delegate, queue);
+
+			// ========================
+
+			if session.canAddOutput(&data_output) {
+
+				session.addOutput(data_output);
+			}
+
+			session.commitConfiguration();
+
+			// ========================
 
 			CameraM {
 				delegate: delegate,

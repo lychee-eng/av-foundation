@@ -2,7 +2,7 @@ use objc::runtime::Class;
 use objc_foundation::NSObject;
 use super::ffi;
 
-pub struct WrappedAvCaptureVideoDataOutputSampleBufferDelegate(Class);
+pub struct WrappedAvCaptureVideoDataOutputSampleBufferDelegate(pub(super) Class);
 
 pub trait AvCaptureVideoDataOutputSampleBufferDelegate: Sized {
 
