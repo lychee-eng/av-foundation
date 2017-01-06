@@ -1,0 +1,16 @@
+[package]
+name = "av-foundation"
+version = "0.1.0"
+authors = ["Jony <jonysy@users.noreply.github.com>"]
+license = "MIT/Apache-2.0"
+build = true
+
+[dependencies]
+dispatch = "0.1.1"
+log = "0.3.6"
+objc = "0.2.2"
+objc-foundation = "0.1.1"
+objc_id = "0.1.0"
+
+[build-dependencies]
+gcc = "0.3.41"
