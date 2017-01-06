@@ -7,8 +7,17 @@ use objc_foundation::NSObject;
 /// an `AVCaptureSession` object.
 pub struct AvCaptureInput {
 	pub(super) obj: *mut NSObject,
-	/// The capture input’s ports.
-	ports: Vec<Box<AvCaptureInputPort>>,
+	// /// The capture input’s ports.
+	// ports: Vec<Box<AvCaptureInputPort>>,
+}
+
+impl AvCaptureInput {
+
+	pub fn new(obj: *mut NSObject) -> AvCaptureInput {
+		AvCaptureInput {
+			obj: obj,
+		}
+	}
 }
 
 impl Drop for AvCaptureInput {

@@ -5,7 +5,7 @@ use super::{ffi, AvMediaType};
 /// associated with that device. You use a capture device to configure the properties of the 
 /// underlying hardware. A capture device also provides input data (such as audio or video) to 
 /// an `AVCaptureSession` object.
-pub struct AvCaptureDevice { obj: *mut NSObject }
+pub struct AvCaptureDevice { pub(super) obj: *mut NSObject }
 
 impl AvCaptureDevice {
 

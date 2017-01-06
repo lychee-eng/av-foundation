@@ -1,5 +1,5 @@
 use objc_foundation::NSObject;
-use super::{AvCaptureDevice, AvCaptureInput};
+use super::{ffi, AvCaptureDevice, AvCaptureInput};
 
 /// Capture Device Input
 ///
@@ -16,6 +16,18 @@ impl AvCaptureDeviceInput {
 	/// Initializes an input to use a specified device.
 	pub fn init__device(device: AvCaptureDevice) -> AvCaptureDeviceInput {
 
-		unimplemented!()
+		let device_input = unsafe {
+			let error = 0 as *mut NSObject; // TODO
+
+			msg_send![
+				msg_send![&ffi::AVCaptureDeviceInput, alloc]: *mut NSObject, 
+
+				initWithDevice:device.obj error:&error]
+		};
+
+		AvCaptureDeviceInput {
+			device: device,
+			sup: AvCaptureInput::new(device_input)
+		}
 	}
 }
