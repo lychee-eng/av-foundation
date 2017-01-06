@@ -11,14 +11,3 @@ mod device;
 mod input;
 mod output;
 mod session;
-
-pub fn update_settings_todo(
-	del: &AvCaptureVideoDataOutputSampleBufferDelegate, 
-	data_output: &AvCaptureVideoDataOutput
-) {
-
-	unsafe {
-		
-		msg_send![del.obj, settings:data_output.obj]
-	}
-}

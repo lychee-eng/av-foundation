@@ -1,4 +1,5 @@
 use dispatch::ffi::dispatch_queue_t;
+use objc::runtime::Object;
 use objc_foundation::NSObject;
 
 use AvCaptureVideoDataOutputSampleBufferDelegate as Delegate;
@@ -7,7 +8,7 @@ use super::super::AvCaptureConnection;
 use super::super::super::AvMediaType;
 
 pub struct AvCaptureVideoDataOutput {
-	pub(super::super) obj: *mut NSObject,
+	pub(super::super) obj: *mut Object,
 }
 
 impl AvCaptureVideoDataOutput {
@@ -16,12 +17,20 @@ impl AvCaptureVideoDataOutput {
 
 		let obj = unsafe {
 
-			let obj: *mut NSObject = msg_send![&AVCaptureVideoDataOutput, alloc];
+			let obj: *mut Object = msg_send![&AVCaptureVideoDataOutput, alloc];
 			msg_send![obj, init]
 		};
 
 		AvCaptureVideoDataOutput {
 			obj,
+		}
+	}
+
+	pub fn set__videoSettings(&self, videoSettings: *mut NSObject) {
+
+		unsafe {
+			
+			let _: () = msg_send![self.obj, setVideoSettings:videoSettings];
 		}
 	}
 

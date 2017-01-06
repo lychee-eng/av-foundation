@@ -19,6 +19,12 @@ extern {
 	pub(super) static AVMediaTypeVideo: *mut NSString;
 }
 
+#[link(name = "CoreFoundation", kind = "framework")]
+extern {
+
+    pub static kCVPixelBufferPixelFormatTypeKey: *mut Class;
+}
+
 #[link(name = "capture")]
 extern {
     

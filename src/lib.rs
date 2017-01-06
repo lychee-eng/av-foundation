@@ -14,13 +14,11 @@ pub use capture::{
 	AvCaptureOutput, 
 	AvCaptureVideoDataOutput, AvCaptureVideoDataOutputSampleBufferDelegate,
 	AvCaptureSession,
-
-	update_settings_todo
 };
 
 pub use media_type::AvMediaType;
 
+pub mod ffi;
+
 mod capture;
 mod media_type;
-
-mod ffi;

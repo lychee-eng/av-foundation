@@ -1,6 +1,8 @@
 use av::AvCaptureVideoDataOutputSampleBufferDelegate;
 use av::{AvCaptureDevice, AvCaptureDeviceInput, AvCaptureVideoDataOutput, AvCaptureSession, AvMediaType};
 use dispatch::ffi::dispatch_queue_create;
+use objc::runtime::Class;
+use objc_foundation::NSObject;
 use std::ffi::CString;
 use std::ptr;
 
@@ -68,8 +70,22 @@ impl Buf {
 
 		if session.canAddOutput(&data_output) {
 
-			// todo
-			::av::update_settings_todo(&super_, &data_output);
+			unsafe {
+				let key = ::av::ffi::kCVPixelBufferPixelFormatTypeKey as *mut _;
+				let value: *mut NSObject = 
+					msg_send![Class::get("NSNumber").unwrap(), numberWithInt:1111970369];
+
+				let dictionary: *mut NSObject = 
+					msg_send![
+						Class::get("NSDictionary").unwrap(), 
+						dictionaryWithObject:value forKey:key
+					];
+
+				data_output.set__videoSettings(dictionary);
+
+				// let _: () = msg_send![value, release];
+				// let _: () = msg_send![dictionary, release];
+			}
 
 			session.addOutput(data_output);
 		}
