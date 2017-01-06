@@ -16,6 +16,8 @@ impl AvCaptureOutput {
 		}
 	}
 
+	/// Returns the first connection in the connections array with an input port of a 
+	/// specified media type.
 	pub fn connectionWithMediaType(&self, media_type: AvMediaType) -> AvCaptureConnection {
 
 		let obj = unsafe {

@@ -91,6 +91,8 @@ fn main() {
 
 			// ========================
 
+			session.startRunning();
+
 			CameraM {
 				delegate: delegate,
 			}

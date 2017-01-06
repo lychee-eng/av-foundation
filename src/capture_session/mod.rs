@@ -80,6 +80,15 @@ impl AvCaptureSession {
 		}
 	}
 
+	/// Tells the receiver to start running.
+	pub fn startRunning(&mut self) {
+
+		unsafe {
+
+			msg_send![self.obj, startRunning]
+		}
+	}
+
 }
 
 impl Drop for AvCaptureSession {
