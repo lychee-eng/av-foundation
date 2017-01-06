@@ -6,6 +6,16 @@ pub struct AvCaptureOutput {
 	pub(super) obj: *mut NSObject,
 }
 
+impl AvCaptureOutput {
+
+	pub fn new(obj: *mut NSObject) -> AvCaptureOutput {
+		
+		AvCaptureOutput {
+			obj: obj,
+		}
+	}
+}
+
 impl Drop for AvCaptureOutput {
 
 	fn drop(&mut self) {

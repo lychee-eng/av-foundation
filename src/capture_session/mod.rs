@@ -57,8 +57,8 @@ impl AvCaptureSession {
 	pub fn beginConfiguration(&mut self) {
 
 		unsafe {
-			
-			let _: () = msg_send![self.obj, beginConfiguration];
+
+			msg_send![self.obj, beginConfiguration]
 		}
 	}
 
