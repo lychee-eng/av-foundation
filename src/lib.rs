@@ -8,6 +8,7 @@ extern crate dispatch;
 extern crate objc_foundation;
 extern crate objc_id;
 
+pub use capture_connection::AvCaptureConnection;
 pub use capture_device::AvCaptureDevice;
 pub use capture_device_input::AvCaptureDeviceInput;
 pub use capture_input::{AvCaptureInput, AvCaptureInputPort};
@@ -20,6 +21,7 @@ pub use delegate::{
 pub use error::AvError;
 pub use media_type::AvMediaType;
 
+mod capture_connection;
 mod capture_device;
 mod capture_device_input;
 mod capture_input;

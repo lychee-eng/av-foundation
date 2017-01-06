@@ -1,5 +1,6 @@
 use dispatch::ffi::dispatch_queue_t;
 use objc_foundation::NSObject;
+use std::ops::Deref;
 use super::{ffi, AvCaptureOutput, WrappedAvCaptureVideoDataOutputSampleBufferDelegate};
 
 pub struct AvCaptureVideoDataOutput {
@@ -29,5 +30,15 @@ impl AvCaptureVideoDataOutput {
 
 			msg_send![self.sup.obj, setSampleBufferDelegate:&del.0 queue:queue];
 		}
+	}
+}
+
+impl Deref for AvCaptureVideoDataOutput {
+
+	type Target = AvCaptureOutput;
+
+	fn deref(&self) -> &AvCaptureOutput {
+
+		&self.sup
 	}
 }

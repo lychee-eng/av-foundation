@@ -77,6 +77,9 @@ fn main() {
 
 			data_output.set__sampleBufferDelegate__queue(&delegate, queue);
 
+			let capture_conn = 
+				data_output.connectionWithMediaType(AvMediaType::Video);
+
 			// ========================
 
 			if session.canAddOutput(&data_output) {
