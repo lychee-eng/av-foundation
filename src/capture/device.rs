@@ -1,5 +1,5 @@
 use objc_foundation::NSObject;
-use super::{ffi, AvMediaType};
+use AvMediaType;
 
 /// An `AVCaptureDevice` object represents a physical capture device and the properties 
 /// associated with that device. You use a capture device to configure the properties of the 
@@ -11,14 +11,15 @@ impl AvCaptureDevice {
 
 	/// Returns the default device used to capture data of a given media type.
 	pub fn default__withMediaType(media_type: AvMediaType) -> AvCaptureDevice {
+		use ffi::AVCaptureDevice;
 
 		let obj = unsafe {
 
-			msg_send![&ffi::AVCaptureDevice, defaultDeviceWithMediaType:media_type.ns_string()]
+			msg_send![&AVCaptureDevice, defaultDeviceWithMediaType:media_type.as_ptr()]
 		};
 
 		AvCaptureDevice {
-			obj: obj,
+			obj,
 		}
 	}
 }

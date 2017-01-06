@@ -1,23 +1,16 @@
 use objc_foundation::{NSString, };
-use std::ops::Deref;
-use super::ffi;
 
-pub enum AvMediaType {
-	Video,
+use ffi::AVMediaTypeVideo;
 
-	__NonExhaustive,
-}
+pub enum AvMediaType { Video }
 
 impl AvMediaType {
 
-	pub(super) fn ns_string(&self) -> *mut NSString {
+	pub(super) fn as_ptr(&self) -> *mut NSString {
+		use self::AvMediaType::*;
 
-		match *self {
-			AvMediaType::Video => {
-				ffi::AVMediaTypeVideo
-			},
-
-			_ => unimplemented!(),
+		match self {
+			&Video => AVMediaTypeVideo,
 		}
 	}
 }

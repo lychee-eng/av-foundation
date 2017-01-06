@@ -1,5 +1,5 @@
 #![allow(warnings)]
-#![feature(pub_restricted, type_ascription)]
+#![feature(field_init_shorthand, pub_restricted)]
 
 #[macro_use] extern crate log;
 #[macro_use] extern crate objc;
@@ -8,27 +8,19 @@ extern crate dispatch;
 extern crate objc_foundation;
 extern crate objc_id;
 
-pub use capture_connection::AvCaptureConnection;
-pub use capture_device::AvCaptureDevice;
-pub use capture_device_input::AvCaptureDeviceInput;
-pub use capture_input::{AvCaptureInput, AvCaptureInputPort};
-pub use capture_output::AvCaptureOutput;
-pub use capture_session::AvCaptureSession;
-pub use capture_video_data_output::AvCaptureVideoDataOutput;
-pub use delegate::{
-	AvCaptureVideoDataOutputSampleBufferDelegate, 
-	WrappedAvCaptureVideoDataOutputSampleBufferDelegate};
-pub use error::AvError;
+pub use capture::{
+	AvCaptureConnection, 
+	AvCaptureDevice, AvCaptureDeviceInput, AvCaptureInput, AvCaptureInputPort,
+	AvCaptureOutput, 
+	AvCaptureVideoDataOutput, AvCaptureVideoDataOutputSampleBufferDelegate,
+	AvCaptureSession,
+
+	update_settings_todo
+};
+
 pub use media_type::AvMediaType;
 
-mod capture_connection;
-mod capture_device;
-mod capture_device_input;
-mod capture_input;
-mod capture_output;
-mod capture_session;
-mod capture_video_data_output;
-mod delegate;
-mod error;
+mod capture;
 mod media_type;
+
 mod ffi;

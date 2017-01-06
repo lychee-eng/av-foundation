@@ -58,6 +58,14 @@ static NSArray * observers;
     [_nsLock unlock];
 }
 
+- (void)settings:(AVCaptureVideoDataOutput *)output
+{
+    output.videoSettings =
+        [NSDictionary dictionaryWithObject:
+            [NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
+            forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+}
+
 - (id)init
 {
     self = [super init];

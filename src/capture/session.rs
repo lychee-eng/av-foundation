@@ -1,24 +1,27 @@
 use objc_foundation::NSObject;
-use super::{ffi, AvCaptureDeviceInput, AvCaptureInput, AvCaptureVideoDataOutput};
+use super::{AvCaptureDeviceInput, AvCaptureVideoDataOutput};
 
 /// You use an `AVCaptureSession` object to coordinate the flow of data from AV input 
 /// devices to outputs.
 pub struct AvCaptureSession {
 	obj: *mut NSObject,
-	inputs: Vec<AvCaptureDeviceInput>,
-	outputs: Vec<AvCaptureVideoDataOutput>,
+	pub inputs: Vec<AvCaptureDeviceInput>,
+	pub outputs: Vec<AvCaptureVideoDataOutput>,
 }
 
 impl AvCaptureSession {
 
-	pub fn new() -> AvCaptureSession {
+	pub fn init() -> AvCaptureSession {
+		use ffi::AVCaptureSession;
 
-		let obj: *mut NSObject = unsafe {
-			msg_send![msg_send![&ffi::AVCaptureSession, alloc]: *mut NSObject, init]
+		let obj = unsafe {
+			
+			let obj: *mut NSObject = msg_send![&AVCaptureSession, alloc];
+			msg_send![obj, init]
 		};
 
 		AvCaptureSession {
-			obj: obj,
+			obj,
 			inputs: vec![],
 			outputs: vec![],
 		}
@@ -30,14 +33,14 @@ impl AvCaptureSession {
 
 		unsafe {
 
-			msg_send![self.obj, canAddInput:input.sup.obj]
+			msg_send![self.obj, canAddInput:input.obj]
 		}
 	}
 
 	/// Adds a given input to the session.
 	pub fn addInput(&mut self, input: AvCaptureDeviceInput) {
 
-		let _: () = unsafe { msg_send![self.obj, addInput:input.sup.obj] };
+		let _: () = unsafe { msg_send![self.obj, addInput:input.obj] };
 
 		self.inputs.push(input);
 	}
@@ -46,7 +49,7 @@ impl AvCaptureSession {
 	/// Returns a Boolean value that indicates whether a given output can be added to the session.
 	pub fn canAddOutput(&self, output: &AvCaptureVideoDataOutput) -> bool {
 		unsafe {
-			msg_send![self.obj, canAddOutput:output.sup.obj]
+			msg_send![self.obj, canAddOutput:output.obj]
 		}
 	}
 
@@ -57,13 +60,13 @@ impl AvCaptureSession {
 	/// * `output` - An output to add to the session.
 	pub fn addOutput(&mut self, output: AvCaptureVideoDataOutput) {
 
-		let _: () = unsafe { msg_send![self.obj, addOutput:output.sup.obj] };
+		let _: () = unsafe { msg_send![self.obj, addOutput:output.obj] };
 
 		self.outputs.push(output);
 	}
 
 	/// Indicates the start of a set of configuration changes to be made atomically.
-	pub fn beginConfiguration(&mut self) {
+	pub fn beginConfiguration(&self) {
 
 		unsafe {
 
@@ -72,7 +75,7 @@ impl AvCaptureSession {
 	}
 
 	/// Commits a set of configuration changes.
-	pub fn commitConfiguration(&mut self) {
+	pub fn commitConfiguration(&self) {
 
 		unsafe {
 
@@ -81,14 +84,13 @@ impl AvCaptureSession {
 	}
 
 	/// Tells the receiver to start running.
-	pub fn startRunning(&mut self) {
+	pub fn startRunning(&self) {
 
 		unsafe {
 
 			msg_send![self.obj, startRunning]
 		}
 	}
-
 }
 
 impl Drop for AvCaptureSession {
