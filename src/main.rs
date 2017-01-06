@@ -7,6 +7,11 @@ use dispatch::ffi::dispatch_queue_create;
 use std::ffi::CString;
 use std::ptr;
 
+// pub trait AvCaptureVideoDataOutputSampleBufferDelegate {
+
+// 	fn from(CaptureVideoDataOutputSampleBufferDelegate)
+// }
+
 fn main() {
 	// A session is used to control the flow of the data from the input to the output device.
 	let mut session = AvCaptureSession::new();

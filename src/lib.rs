@@ -14,6 +14,9 @@ pub use capture_input::{AvCaptureInput, AvCaptureInputPort};
 pub use capture_output::AvCaptureOutput;
 pub use capture_session::AvCaptureSession;
 pub use capture_video_data_output::AvCaptureVideoDataOutput;
+pub use delegate::{
+	AvCaptureVideoDataOutputSampleBufferDelegate, 
+	WrappedAvCaptureVideoDataOutputSampleBufferDelegate};
 pub use error::AvError;
 pub use media_type::AvMediaType;
 
@@ -23,6 +26,7 @@ mod capture_input;
 mod capture_output;
 mod capture_session;
 mod capture_video_data_output;
+mod delegate;
 mod error;
 mod media_type;
 mod ffi;
