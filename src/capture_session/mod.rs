@@ -5,7 +5,8 @@ use super::{ffi, AvCaptureDeviceInput, AvCaptureInput, AvCaptureVideoDataOutput}
 /// devices to outputs.
 pub struct AvCaptureSession {
 	obj: *mut NSObject,
-	//inputs: Vec<AvCaptureInput>,
+	inputs: Vec<AvCaptureDeviceInput>,
+	outputs: Vec<AvCaptureVideoDataOutput>,
 }
 
 impl AvCaptureSession {
@@ -18,13 +19,17 @@ impl AvCaptureSession {
 
 		AvCaptureSession {
 			obj: obj,
+			inputs: vec![],
+			outputs: vec![],
 		}
 	}
 
 	// TODO: pub fn canAddInput<I: AvCaptureInput>(input: I) -> bool
 	/// Returns a Boolean value that indicates whether a given input can be added to the session.
 	pub fn canAddInput(&self, input: &AvCaptureDeviceInput) -> bool {
+
 		unsafe {
+
 			msg_send![self.obj, canAddInput:input.sup.obj]
 		}
 	}
@@ -32,7 +37,9 @@ impl AvCaptureSession {
 	/// Adds a given input to the session.
 	pub fn addInput(&mut self, input: AvCaptureDeviceInput) {
 
-		unimplemented!()
+		let _: () = unsafe { msg_send![self.obj, addInput:input.sup.obj] };
+
+		self.inputs.push(input);
 	}
 
 	// TODO: pub fn canAddOutput<O: AvCaptureOutput>(output: O) -> bool
@@ -50,7 +57,9 @@ impl AvCaptureSession {
 	/// * `output` - An output to add to the session.
 	pub fn addOutput(&mut self, output: AvCaptureVideoDataOutput) {
 
-		unimplemented!()
+		let _: () = unsafe { msg_send![self.obj, addOutput:output.sup.obj] };
+
+		self.outputs.push(output);
 	}
 
 	/// Indicates the start of a set of configuration changes to be made atomically.
