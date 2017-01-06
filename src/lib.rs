@@ -9,10 +9,14 @@ extern crate objc_foundation;
 extern crate objc_id;
 
 pub use capture_device::AvCaptureDevice;
+pub use capture_device_input::AvCaptureDeviceInput;
+pub use capture_input::{AvCaptureInput, AvCaptureInputPort};
 pub use error::AvError;
 pub use media_type::AvMediaType;
 
 mod capture_device;
+mod capture_device_input;
+mod capture_input;
 mod error;
 mod media_type;
 mod ffi;
