@@ -1,5 +1,5 @@
-use objc::runtime::{Class, };
-use objc_foundation::{NSString, };
+use objc::runtime::Class;
+use objc_foundation::NSString;
 
 #[link(name = "AVFoundation", kind = "framework")]
 extern {
@@ -17,4 +17,11 @@ extern {
     pub(super) static AVCaptureSession: Class;
 
 	pub(super) static AVMediaTypeVideo: *mut NSString;
+}
+
+#[link(name = "capture")]
+extern {
+    
+    #[link_name = "OBJC_CLASS_$_CaptureVideoDataOutputSampleBufferDelegate"]
+    pub(super) static CaptureVideoDataOutputSampleBufferDelegate: Class;
 }
