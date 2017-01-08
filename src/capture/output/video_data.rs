@@ -26,6 +26,9 @@ impl AvCaptureVideoDataOutput {
 		}
 	}
 
+	// TODO The only key currently supported is the kCVPixelBufferPixelFormatTypeKey key.
+	// TODO return a list of supported formats
+	
 	pub fn set__videoSettings(&self, videoSettings: *mut NSObject) {
 
 		unsafe {

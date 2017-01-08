@@ -1,11 +1,16 @@
 #include <stdio.h>
-#include "capture.h"
+#import <AVFoundation/AVFoundation.h>
+#import <Foundation/Foundation.h>
+
+@interface CaptureVideoDataOutputSampleBufferDelegate : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate> {
+    char * frame;
+    NSLock * nsLock;
+    NSArray * observers;
+}
+
+@end
 
 @implementation CaptureVideoDataOutputSampleBufferDelegate
-    
-static char * frame;
-static NSLock * _nsLock;
-static NSArray * observers;
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
     didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
@@ -40,22 +45,13 @@ static NSArray * observers;
         return;
     }
         
-    [_nsLock lock];
+    [nsLock lock];
 
     memcpy(frame, baseAddress, frameBytes);
 
-    [_nsLock unlock];
+    [nsLock unlock];
 
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-}
-
-- (void)readFrame:(void *)dest
-{
-    [_nsLock lock];
-    
-    memcpy(dest, frame, 1280 * 720 * 4);
-    
-    [_nsLock unlock];
 }
 
 - (id)init
@@ -63,7 +59,7 @@ static NSArray * observers;
     self = [super init];
     
     if(self) {
-        _nsLock = [[NSLock alloc] init];
+        nsLock = [[NSLock alloc] init];
 
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         id deviceWasConnectedObserver =

@@ -7,6 +7,7 @@ build = true
 
 [dependencies]
 dispatch = "0.1.1"
+libc = "0.2.18"
 log = "0.3.6"
 objc = "0.2.2"
 objc-foundation = "0.1.1"

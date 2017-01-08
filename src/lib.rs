@@ -5,6 +5,7 @@
 #[macro_use] extern crate objc;
 
 extern crate dispatch;
+extern crate libc;
 extern crate objc_foundation;
 extern crate objc_id;
 
