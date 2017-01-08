@@ -21,8 +21,9 @@ impl AvCaptureVideoDataOutputSampleBufferDelegate {
 	}
 
 	// TODO
-	pub fn memcopy<A>(&self, dst: *mut A) {
+	pub fn frame(&self) -> [u8; 4 * 1280 * 720] {
 		use libc::{c_void, memcpy};
+		use std::mem;
 
 		pub struct NSLock;
 
@@ -33,21 +34,29 @@ impl AvCaptureVideoDataOutputSampleBufferDelegate {
 			}
 		}
 
-		let _: () = unsafe {
+		unsafe {
+			let mut dst: [u8; 4 * 1280 * 720] = mem::uninitialized();
 
-			let mut nsLock = (*self.obj).get_mut_ivar::<&mut NSLock>("nsLock");
-			let mut nsLock = *nsLock as *mut NSLock as *mut Object;
+			{
+				let mut dst: *mut [u8; 4 * 1280 * 720] = &mut dst;
 
-			let _: () = msg_send![nsLock, lock];
+				let mut nsLock = (*self.obj).get_mut_ivar::<&mut NSLock>("nsLock");
+				let mut nsLock = *nsLock as *mut NSLock as *mut Object;
 
-			let dst = dst as *mut c_void;
-			let src = *(*self.obj).get_ivar::<*mut i8>("frame") as *const c_void;
-			let size = 1280 * 720 * 4;
+				let _: () = msg_send![nsLock, lock];
 
-			let _ = memcpy(dst, src, size);
+				let dst = dst as *mut c_void;
+				let src = *(*self.obj).get_ivar::<*mut i8>("frame") as *const c_void;
+				let size = 1280 * 720 * 4;
 
-			let _: () = msg_send![nsLock, unlock];
-		};
+				let _ = memcpy(dst, src, size);
+
+				let _: () = msg_send![nsLock, unlock];
+
+			}
+
+			dst
+		}
 	}
 }
 
