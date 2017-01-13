@@ -84,11 +84,30 @@ impl AvCaptureSession {
 	}
 
 	/// Tells the receiver to start running.
+	///
+	/// This method is used to start the flow of data from the inputs to the outputs connected to 
+	/// the `AVCaptureSession` instance that is the receiver. This method is synchronous and blocks 
+	/// until the receiver has either completely started running or failed to start running. If 
+	/// an error occurs during this process and the receiver fails to start running, you receive 
+	/// an `AVCaptureSessionRuntimeError`.
 	pub fn startRunning(&self) {
 
 		unsafe {
 
 			msg_send![self.obj, startRunning]
+		}
+	}
+
+	/// Tells the receiver to stop running.
+	///
+	/// This method is used to stop the flow of data from the inputs to the outputs connected to 
+	/// the `AVCaptureSession` instance that is the receiver. This method is synchronous and 
+	/// blocks until the receiver has completely stopped running.
+	pub fn stopRunning(&self) {
+
+		unsafe {
+
+			msg_send![self.obj, stopRunning]
 		}
 	}
 }
