@@ -38,12 +38,6 @@
 
     baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
     frameBytes = bytesPerRow * height;
-
-    if(height != 720)
-    {
-        printf("[Error]: Check dimensions!\n");
-        return;
-    }
         
     [nsLock lock];
 
@@ -54,7 +48,7 @@
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 }
 
-- (id)init
+- (id)initWithWidth:(size_t)width withHeight:(size_t)height withChannels:(size_t)nchannels
 {
     self = [super init];
     
@@ -72,7 +66,7 @@
         observers = [[NSArray alloc] initWithObjects:deviceWasConnectedObserver, nil];
     }
 
-    frame = malloc(1280*720*4);
+    frame = malloc(width * height * nchannels);
     
     return self;
 }

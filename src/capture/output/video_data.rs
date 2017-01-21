@@ -1,5 +1,5 @@
 use dispatch::ffi::dispatch_queue_t;
-use objc::runtime::Object;
+use objc::runtime::{Class, Object};
 use objc_foundation::NSObject;
 
 use AvCaptureVideoDataOutputSampleBufferDelegate as Delegate;
@@ -34,6 +34,47 @@ impl AvCaptureVideoDataOutput {
 		unsafe {
 			
 			let _: () = msg_send![self.obj, setVideoSettings:videoSettings];
+		}
+	}
+
+	pub fn set__videoSettings_default(&self, width: u32, height: u32) {
+		use ffi::{kCVPixelBufferWidthKey, kCVPixelBufferHeightKey, kCVPixelBufferPixelFormatTypeKey};
+
+		let NSMutableDictionary = Class::get("NSMutableDictionary").unwrap();
+		let NSNumber = Class::get("NSNumber").unwrap();
+
+		unsafe {
+
+			let dictionary: *mut NSObject = {
+
+				// kCVPixelFormatType_32BGRA
+				let px: *mut NSObject = msg_send![NSNumber, numberWithInt:0x42475241];
+
+				msg_send![
+					NSMutableDictionary,
+					dictionaryWithObject:px forKey:kCVPixelBufferPixelFormatTypeKey
+				]
+			};
+
+			{
+				let height: *mut NSObject = msg_send![NSNumber, numberWithUnsignedLong:height];
+
+				let _: () = msg_send![
+					dictionary, 
+					setObject:height forKey:kCVPixelBufferHeightKey
+				];
+			}
+
+			{
+				let width: *mut NSObject = msg_send![NSNumber, numberWithUnsignedLong:width];
+
+				let _: () = msg_send![dictionary, setObject:width forKey:kCVPixelBufferWidthKey];
+			}
+			
+			let _: () = msg_send![self.obj, setVideoSettings:dictionary];
+
+			// let _: () = msg_send![value, release];
+			// let _: () = msg_send![dictionary, release];
 		}
 	}
 

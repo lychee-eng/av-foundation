@@ -6,13 +6,13 @@ pub struct AvCaptureVideoDataOutputSampleBufferDelegate {
 
 impl AvCaptureVideoDataOutputSampleBufferDelegate {
 
-	pub fn init() -> AvCaptureVideoDataOutputSampleBufferDelegate {
+	pub fn init(width: u32, height: u32, nchannels: u32) -> AvCaptureVideoDataOutputSampleBufferDelegate {
 		use ffi::CaptureVideoDataOutputSampleBufferDelegate;
 
 		let obj = unsafe {
 
 			let obj: *mut Object =  msg_send![&CaptureVideoDataOutputSampleBufferDelegate, alloc];
-			msg_send![obj, init]
+			msg_send![obj, initWithWidth:width withHeight:height withChannels:nchannels]
 		};
 
 		AvCaptureVideoDataOutputSampleBufferDelegate {
@@ -21,7 +21,7 @@ impl AvCaptureVideoDataOutputSampleBufferDelegate {
 	}
 
 	// TODO
-	pub fn frame(&self, dst: &mut [u8; 4 * 1280 * 720]) {
+	pub fn frame(&self, dst: *mut [u8], size: usize) {
 		use libc::{c_void, memcpy};
 		use std::mem;
 
@@ -35,7 +35,6 @@ impl AvCaptureVideoDataOutputSampleBufferDelegate {
 		}
 
 		unsafe {
-			let mut dst: *mut [u8; 4 * 1280 * 720] = dst;
 
 			let mut nsLock = (*self.obj).get_mut_ivar::<&mut NSLock>("nsLock");
 			let mut nsLock = *nsLock as *mut NSLock as *mut Object;
@@ -44,7 +43,6 @@ impl AvCaptureVideoDataOutputSampleBufferDelegate {
 
 			let dst = dst as *mut c_void;
 			let src = *(*self.obj).get_ivar::<*mut i8>("frame") as *const c_void;
-			let size = 1280 * 720 * 4;
 
 			let _ = memcpy(dst, src, size);
 

@@ -23,6 +23,8 @@ extern {
 extern {
 
     pub static kCVPixelBufferPixelFormatTypeKey: *mut Class;
+    pub static kCVPixelBufferWidthKey: *mut Class;
+    pub static kCVPixelBufferHeightKey: *const Class;
 }
 
 #[link(name = "capture")]
